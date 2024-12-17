@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Password Generator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        Generate a <br />
+        <span>Random Password</span>
+      </h1>
+      <div class="display">
+        <input type="text" id="password" placeholder="Password" />
+        <img id="copyPassword" src="copy.png" alt="" />
+      </div>
+
+      <button id="generatePassword">
+        <img src="generate.png" alt="" />Generate Password
+      </button>
+    </div>
+    <script>
+      const passwordBox = document.getElementById("password");
+      const generatePasswordBtn = document.getElementById("generatePassword");
+      const copyPasswordBtn = document.getElementById("copyPassword");
+      const length = 12;
+      const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const lowercase = "abcdefghijklmnopqrstuvwxyz";
+      const numbers = "0123456789";
+      const symbols = "!@#$%^&*()_+~|{}[]<>/?-=";
+      const allchars = uppercase + lowercase + symbols + numbers;
+
+      function createPassword() {
+        let password = "";
+        password += uppercase[Math.floor(Math.random() * uppercase.length)];
+        password += lowercase[Math.floor(Math.random() * lowercase.length)];
+        password += numbers[Math.floor(Math.random() * numbers.length)];
+        password += symbols[Math.floor(Math.random() * symbols.length)];
+
+        for (let i = 0; i < length - 4; i++) {
+          password += allchars[Math.floor(Math.random() * allchars.length)];
+        }
+
+        return password;
+      }
+      generatePasswordBtn.addEventListener("click", () => {
+        passwordBox.value = createPassword();
+      });
+
+      copyPasswordBtn.addEventListener("click", () => {
+        passwordBox.select();
+        navigator.clipboard.writeText(passwordBox.value).then(() => {
+          alert("Password copied successfully!");
+        });
+      });
+    </script>
+  </body>
+</html>
